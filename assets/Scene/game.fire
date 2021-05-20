@@ -189,7 +189,7 @@
       "array": [
         0,
         0,
-        364.5966949932487,
+        363.8948362001369,
         0,
         0,
         0,
@@ -845,7 +845,7 @@
       "y": 0
     },
     "_angularVelocity": 0,
-    "_fixedRotation": false,
+    "_fixedRotation": true,
     "enabledContactListener": false,
     "bullet": false,
     "awakeOnLoad": true,
@@ -1009,8 +1009,8 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.5,
-    "_restitution": 1,
+    "_friction": 0.8,
+    "_restitution": 0.8,
     "body": null,
     "_offset": {
       "__type__": "cc.Vec2",
@@ -1160,8 +1160,8 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.5,
-    "_restitution": 1,
+    "_friction": 0.8,
+    "_restitution": 0.8,
     "body": null,
     "_offset": {
       "__type__": "cc.Vec2",
@@ -1206,7 +1206,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 80,
+      "width": 50,
       "height": 800
     },
     "_anchorPoint": {
@@ -1311,8 +1311,8 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.5,
-    "_restitution": 1,
+    "_friction": 0.8,
+    "_restitution": 0.8,
     "body": null,
     "_offset": {
       "__type__": "cc.Vec2",
@@ -1321,7 +1321,7 @@
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 80,
+      "width": 50,
       "height": 800
     },
     "_id": "43EPNCAN9MU71JPnSKK2dN"
@@ -1357,7 +1357,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 80,
+      "width": 50,
       "height": 800
     },
     "_anchorPoint": {
@@ -1462,8 +1462,8 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.5,
-    "_restitution": 1,
+    "_friction": 0.8,
+    "_restitution": 0.8,
     "body": null,
     "_offset": {
       "__type__": "cc.Vec2",
@@ -1472,7 +1472,7 @@
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 80,
+      "width": 50,
       "height": 800
     },
     "_id": "94+iJR3eVNQZ35//HtK+6R"

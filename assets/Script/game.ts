@@ -22,23 +22,11 @@ export default class NewClass extends cc.Component {
     touchPos = cc.v2(0, 0);   //点击起始点
     endPos = cc.v2(0, 0);     //移动结束点
     heroPos = cc.v2(0, 0);
-    stickPos = cc.v2(0, 0);
     radius = 100;
-    g: number = 800;
     dir = cc.v2(0, 0);
-
-    _curAngle = 0;
-    gunSchedule = null;
-    bulletfun = null;
-
-    xLi: number = 300;
-
-    chongX: number = 0;
-    chongY: number = 0;
 
     onLoad() {
         cc.director.getPhysicsManager().enabled = true;
-        // cc.director.getPhysicsManager().gravity = cc.v2(0, -this.g);
         this.heroPos = this.hero.node.getPosition();
         this.initTouchEvent();
     }
@@ -63,19 +51,6 @@ export default class NewClass extends cc.Component {
 
     touchStartEvent(event) {
         this.touchPos = event.getLocation();
-        let startTouchPos = this.node.convertToNodeSpaceAR(event.getLocation());
-        this.stickPos = startTouchPos;
-
-        // this._curAngle = 0;
-        // this.chongX = this.xLi;
-        // //通过角度计算力度
-        // // this.chongY = this.chongX * Math.tan(Math.abs(this._curAngle) * (Math.PI / 180)); 
-        // this.gunSchedule = function () {
-        //     if (this._curAngle < 90) {
-        //         this._curAngle -= 1;
-        //     }
-        // };
-        // this.schedule(this.gunSchedule, 0.02);
     }
 
     touchMoveEvent(event) {
@@ -91,8 +66,6 @@ export default class NewClass extends cc.Component {
             pos.y = pos.y * this.radius / s
             s = this.radius;
         }
-        //通过角度计算力度
-        // this.chongY = this.chongX * Math.tan(Math.abs(this._curAngle) * (Math.PI / 180)); 
         this.hero.node.setPosition(this.heroPos.add(pos));
 
         //利用三角函数算出方向
@@ -103,21 +76,15 @@ export default class NewClass extends cc.Component {
         this.line.setContentSize(8,s);
     }
 
-    touchEndEvent(event) {
-        this.hero.node.setPosition(cc.v2(0,100));
-        this.dir = cc.v2(0, 0)
+    touchEndEvent() {
+        //设置初始位置
         this.line.setContentSize(8,1);
         //设置速度
-        // this.hero.linearVelocity = cc.v2(500*this.dir.x,500*this.dir.y);
-        // this.hero.applyForceToCenter(cc.v2(this.chongX, this.chongY ), true);
+        this.hero.linearVelocity = cc.v2(-500*this.dir.x,-500*this.dir.y);
     }
 
-    touchCancleEvent(event) {
-        this.hero.node.setPosition(cc.v2(0,100));
-        this.dir = cc.v2(0, 0)
-    }
-
-    onBind() {
+    touchCancleEvent() {
+        
     }
 
     // TS
