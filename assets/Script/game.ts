@@ -25,7 +25,6 @@ export default class NewClass extends cc.Component {
     stickPos = cc.v2(0, 0);
     radius = 100;
     g: number = 800;
-
     dir = cc.v2(0, 0);
 
     _curAngle = 0;
