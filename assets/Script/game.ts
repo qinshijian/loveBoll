@@ -24,11 +24,22 @@ export default class NewClass extends cc.Component {
     heroPos = cc.v2(0, 0);
     radius = 100;
     dir = cc.v2(0, 0);
+    timeInterval = 0; //间隔
+    list = [];
+    index = 0;
 
+    moveFlag:boolean = false;
     onLoad() {
         cc.director.getPhysicsManager().enabled = true;
         this.heroPos = this.hero.node.getPosition();
         this.initTouchEvent();
+
+        for (let index = 0; index < 100; index++) {
+            let a = cc.instantiate(this.pointPrefab)
+            this.node.addChild(a);
+            a.active = false;
+            this.list.push(a);
+        }
     }
 
     start() {
@@ -81,6 +92,8 @@ export default class NewClass extends cc.Component {
         this.line.setContentSize(8,1);
         //设置速度
         this.hero.linearVelocity = cc.v2(-500*this.dir.x,-500*this.dir.y);
+        this.hero.gravityScale = 0.2
+        this.moveFlag = true;
     }
 
     touchCancleEvent() {
@@ -114,5 +127,19 @@ export default class NewClass extends cc.Component {
         }
     }
 
-    // update (dt) {}
+    update (dt) {
+        if(this.moveFlag){
+            this.timeInterval += dt;
+            if(this.timeInterval >= 0.2){
+                this.timeInterval = 0;
+                this.index++;
+                if(this.index > 99){
+                    this.moveFlag = false;
+                    return
+                }
+                this.list[this.index].active = true;
+                this.list[this.index].setPosition(this.hero.node.getPosition());
+            }
+        }
+    }
 }
