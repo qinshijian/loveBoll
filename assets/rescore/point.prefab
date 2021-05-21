@@ -100,8 +100,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 20,
-      "height": 20
+      "width": 10,
+      "height": 10
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -175,7 +175,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "d4eda2dc-de7b-40f7-bcf7-e2fe26caaa9d"
     },
     "fileId": "5dhPyiHc5O2ItfF9T5RdaU",
     "sync": false
@@ -186,7 +186,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "d4eda2dc-de7b-40f7-bcf7-e2fe26caaa9d"
     },
     "fileId": "5fCfKM1KFIMKHkmrXSmrKx",
     "sync": false

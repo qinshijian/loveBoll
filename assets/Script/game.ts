@@ -1,13 +1,13 @@
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class game extends cc.Component {
 
-    // @property(cc.Node)
-    // hero: cc.Node = null;
+    @property(cc.RigidBody)  
+    blueBall: cc.RigidBody = null;  //蓝色小球
 
     @property(cc.RigidBody)
-    hero: cc.RigidBody = null;
+    pinkBall: cc.RigidBody = null; //粉色小球（目标）
 
     @property(cc.Prefab)
     pointPrefab = null;
@@ -18,32 +18,30 @@ export default class NewClass extends cc.Component {
     @property(cc.Node)
     line = null;
 
+    enemyPool:any;  //轨迹点对象池
     // LIFE-CYCLE CALLBACKS:
     touchPos = cc.v2(0, 0);   //点击起始点
     endPos = cc.v2(0, 0);     //移动结束点
-    heroPos = cc.v2(0, 0);
-    radius = 100;
-    dir = cc.v2(0, 0);
-    timeInterval = 0; //间隔
-    list = [];
-    index = 0;
+    bluePos = cc.v2(0, 0);    //蓝色小球初始位置
+    pinkPos = cc.v2(0, 0);    //粉色小球初始位置
+    radius = 100;             //绳子的长度
+    dir = cc.v2(0, 0);        //蓝色小球拖动的方向
+    timeInterval = 0;        //轨迹生成间隔
+    list = [];               //轨迹数组
+    index = 0;               //轨迹下标
 
     moveFlag:boolean = false;
     onLoad() {
         cc.director.getPhysicsManager().enabled = true;
-        this.heroPos = this.hero.node.getPosition();
+        this.bluePos = this.blueBall.node.getPosition();
         this.initTouchEvent();
-
-        for (let index = 0; index < 100; index++) {
-            let a = cc.instantiate(this.pointPrefab)
-            this.node.addChild(a);
-            a.active = false;
-            this.list.push(a);
+        this.enemyPool = new cc.NodePool();
+        //预加载
+        let initCount = 10;
+        for (let i = 0; i < initCount; ++i) {
+            let enemy = cc.instantiate(this.pointPrefab); // 创建节点
+            this.enemyPool.put(enemy); // 通过 put 接口放入对象池
         }
-    }
-
-    start() {
-
     }
 
     initTouchEvent() {
@@ -77,7 +75,7 @@ export default class NewClass extends cc.Component {
             pos.y = pos.y * this.radius / s
             s = this.radius;
         }
-        this.hero.node.setPosition(this.heroPos.add(pos));
+        this.blueBall.node.setPosition(this.bluePos.add(pos));
 
         //利用三角函数算出方向
         this.dir.x = pos.x / s //sin = 对边/斜边
@@ -91,8 +89,8 @@ export default class NewClass extends cc.Component {
         //设置初始位置
         this.line.setContentSize(8,1);
         //设置速度
-        this.hero.linearVelocity = cc.v2(-500*this.dir.x,-500*this.dir.y);
-        this.hero.gravityScale = 0.2
+        this.blueBall.linearVelocity = cc.v2(-500*this.dir.x,-500*this.dir.y);
+        this.blueBall.gravityScale = 0.3
         this.moveFlag = true;
     }
 
@@ -100,45 +98,53 @@ export default class NewClass extends cc.Component {
         
     }
 
-    // TS
-    drawLineOfDashes(g: cc.Graphics, from: cc.Vec2, to: cc.Vec2, stroke: boolean = true, length: number = 8, interval: number = 0): void {
-        if (g) {
-            let off = to.sub(from);
-            let dir = off.normalize();
-            let dis = off.mag();
-            let delta = dir.mul(length + interval);
-            let delta1 = dir.mul(length);
-            let n = Math.floor(dis / (length + interval));
-            for (let i = 0; i < n; ++i) {
-                let start = from.add(delta.mul(i));
-                g.moveTo(start.x, start.y);
-                let end = start.add(delta1);
-                g.lineTo(end.x, end.y);
-            }
-            let start1 = from.add(delta.mul(n));
-            g.moveTo(start1.x, start1.y);
-            if (length < dis - (length + interval) * n) {
-                let end = start1.add(delta1);
-                g.lineTo(end.x, end.y);
-            } else {
-                g.lineTo(to.x, to.y);
-            }
-            if (stroke) g.stroke();
+    //游戏结束 清除对象池资源
+    clearPool(){
+        this.enemyPool.clear();
+        for (var i = this.list.length-1;i >= 0 ;i--) {
+            this.list.splice(i,1);
         }
+    }
+
+    //设置两个小球的生成点位置 
+    setBallPos(level,posInfo){
+        this.bluePos = posInfo.bluePos;
+        this.pinkPos = posInfo.pinkPos;
+    }
+
+    //生成轨迹点node
+    createPoint(call){
+        let enemy = null;
+        if (this.enemyPool.size() > 0) { 
+            enemy = this.enemyPool.get();
+        } else { 
+            enemy = cc.instantiate(this.pointPrefab);
+        }
+        enemy.parent = this.node;
+        enemy.active = false;
+        this.list.push(enemy);
+        if(call){call();}
     }
 
     update (dt) {
         if(this.moveFlag){
             this.timeInterval += dt;
-            if(this.timeInterval >= 0.2){
+            if(this.timeInterval >= 0.1){
                 this.timeInterval = 0;
                 this.index++;
-                if(this.index > 99){
+                if(this.index > 100){
                     this.moveFlag = false;
                     return
                 }
-                this.list[this.index].active = true;
-                this.list[this.index].setPosition(this.hero.node.getPosition());
+
+                this.createPoint(function(){
+                    if(this.index < this.list.length){
+                        this.list[this.index].active = true;
+                        this.list[this.index].setPosition(this.blueBall.node.getPosition());
+                    }else{
+                        this.createPoint();
+                    }
+                }.bind(this)); 
             }
         }
     }

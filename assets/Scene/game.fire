@@ -189,7 +189,7 @@
       "array": [
         0,
         0,
-        364.5966949932487,
+        277.1281292110204,
         0,
         0,
         0,
@@ -1529,9 +1529,10 @@
       "__id__": 2
     },
     "_enabled": true,
-    "hero": {
+    "blueBall": {
       "__id__": 17
     },
+    "pinkBall": null,
     "pointPrefab": {
       "__uuid__": "d4eda2dc-de7b-40f7-bcf7-e2fe26caaa9d"
     },
