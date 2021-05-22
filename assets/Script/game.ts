@@ -1,3 +1,5 @@
+import uiManger from "./uiManger";
+
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -42,6 +44,14 @@ export default class game extends cc.Component {
             let enemy = cc.instantiate(this.pointPrefab); // 创建节点
             this.enemyPool.put(enemy); // 通过 put 接口放入对象池
         }
+
+        //添加障碍物
+        this.addAbstacle(0);
+    }
+
+    //添加障碍物
+    addAbstacle(level:number){
+        uiManger.getInstance().levelType(this.node,level);
     }
 
     initTouchEvent() {

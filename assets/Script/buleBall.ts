@@ -23,8 +23,12 @@ export default class buleBall extends cc.Component {
             //停止蓝色小球刚体动态
             cc.director.getPhysicsManager().enabled = false;
             this.showResult();
-        }else{
+        }else if(other == 'wall'){
             console.log('lose');
+            this.showResult();
+            cc.director.getPhysicsManager().enabled = false;
+        } else{
+            console.log('jump');
         }
     }
 

@@ -21,6 +21,17 @@ export default class uiManger {
         }.bind(this))
     }
 
+    //障碍物
+    levelType(basenode: any, level: any) {
+        let name = "level_"+level;
+        let prefabUrl = "level/"+name;
+        utils.loadPrefab(prefabUrl, function (prefab: any) {
+            if (utils.findNodeByName(basenode, name)) { return }
+            let node = cc.instantiate(prefab)
+            node.setPosition(0,0)
+            basenode.addChild(node)
+        }.bind(this))
+    }
     
     public static singleton: uiManger
     public static getInstance(): uiManger {
