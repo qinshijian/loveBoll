@@ -22,18 +22,18 @@ export default class buleBall extends cc.Component {
         if(other == 'pink'){
             //停止蓝色小球刚体动态
             cc.director.getPhysicsManager().enabled = false;
-            this.showResult();
+            this.showResult("win");
         }else if(other == 'wall'){
             console.log('lose');
-            this.showResult();
+            this.showResult("fail");
             cc.director.getPhysicsManager().enabled = false;
         } else{
             console.log('jump');
         }
     }
 
-    showResult(){
-        uiManger.getInstance().resultLayer(cc.director.getScene(),1);
+    showResult(data){
+        uiManger.getInstance().resultLayer(cc.director.getScene(),data);
     }
     // update (dt) {}
 }
