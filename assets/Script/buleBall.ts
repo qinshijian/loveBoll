@@ -1,3 +1,4 @@
+import uiManger from "./uiManger";
 
 const {ccclass, property} = cc._decorator;
 
@@ -17,14 +18,18 @@ export default class buleBall extends cc.Component {
 
     // 只在两个碰撞体开始接触时被调用一次
     onBeginContact(contact:any, selfCollider:any, otherCollider:any) {
-        // let self = selfCollider.node.name;
         let other = otherCollider.node.name;
         if(other == 'pink'){
-            console.log('win');
+            //停止蓝色小球刚体动态
+            cc.director.getPhysicsManager().enabled = false;
+            this.showResult();
         }else{
             console.log('lose');
         }
     }
 
+    showResult(){
+        uiManger.getInstance().resultLayer(cc.director.getScene(),1);
+    }
     // update (dt) {}
 }
