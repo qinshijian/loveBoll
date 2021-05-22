@@ -16,6 +16,7 @@ export default class game extends cc.Component {
     line = null;
 
     enemyPool:any;  //轨迹点对象池
+    moveInterval = 2; //start点和end相对位置
     // LIFE-CYCLE CALLBACKS:
     touchPos = cc.v2(0, 0);   //点击起始点
     endPos = cc.v2(0, 0);     //移动结束点
@@ -83,7 +84,11 @@ export default class game extends cc.Component {
     }
 
     touchEndEvent(event) {
-        //如果点击 没有移动 
+        //是否只点击不移动
+        let off = event.getLocation().subtract(this.touchPos).mag();
+        if(this.moveInterval  > off){
+            return
+        }
         //设置初始位置
         this.line.setContentSize(8,1);
         //设置速度
