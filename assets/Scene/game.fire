@@ -96,19 +96,19 @@
         "__id__": 32
       },
       {
-        "__id__": 36
+        "__id__": 37
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 40
-      },
-      {
         "__id__": 41
       },
       {
         "__id__": 42
+      },
+      {
+        "__id__": 43
       }
     ],
     "_prefab": null,
@@ -1311,6 +1311,9 @@
       },
       {
         "__id__": 35
+      },
+      {
+        "__id__": 36
       }
     ],
     "_prefab": null,
@@ -1441,6 +1444,16 @@
     "_id": "40Y4L1PN5N0IQVIUekpA26"
   },
   {
+    "__type__": "12675leWQpMk5+4AoP/Wmty",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 32
+    },
+    "_enabled": true,
+    "_id": "f7cVrEjPFLjK3PnsJ1uE+E"
+  },
+  {
     "__type__": "cc.Node",
     "_name": "pink",
     "_objFlags": 0,
@@ -1451,13 +1464,13 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 37
-      },
-      {
         "__id__": 38
       },
       {
         "__id__": 39
+      },
+      {
+        "__id__": 40
       }
     ],
     "_prefab": null,
@@ -1513,7 +1526,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 36
+      "__id__": 37
     },
     "_enabled": true,
     "_materials": [
@@ -1545,7 +1558,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 36
+      "__id__": 37
     },
     "_enabled": true,
     "_type": 0,
@@ -1570,7 +1583,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 36
+      "__id__": 37
     },
     "_enabled": true,
     "tag": 0,
@@ -1643,7 +1656,7 @@
       "__id__": 34
     },
     "pinkBall": {
-      "__id__": 38
+      "__id__": 39
     },
     "pointPrefab": {
       "__uuid__": "d4eda2dc-de7b-40f7-bcf7-e2fe26caaa9d"

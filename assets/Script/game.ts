@@ -31,6 +31,8 @@ export default class game extends cc.Component {
     moveFlag:boolean = false;
     onLoad() {
         cc.director.getPhysicsManager().enabled = true;
+        this.blueBall.enabledContactListener = true;
+        this.pinkBall.enabledContactListener = true;
         this.bluePos = this.blueBall.node.getPosition();
         this.initTouchEvent();
         this.enemyPool = new cc.NodePool();
