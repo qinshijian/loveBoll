@@ -13,9 +13,6 @@ export default class game extends cc.Component {
     pointPrefab = null;
 
     @property(cc.Node)
-    gunNode = null;
-
-    @property(cc.Node)
     line = null;
 
     enemyPool:any;  //轨迹点对象池
@@ -85,7 +82,8 @@ export default class game extends cc.Component {
         this.line.setContentSize(8,s);
     }
 
-    touchEndEvent() {
+    touchEndEvent(event) {
+        //如果点击 没有移动 
         //设置初始位置
         this.line.setContentSize(8,1);
         //设置速度
