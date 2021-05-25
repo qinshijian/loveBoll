@@ -24,12 +24,12 @@ export default class result extends cc.Component {
     }
 
     onAgain(){
-        this.node.removeFromParent();
         EventDispath.getInstance().send(EventIDS.CMD_RET_BALL_STATU)
+        this.node.destroy();
     }
 
     onNext(){
-        this.node.removeFromParent();
         EventDispath.getInstance().send(EventIDS.CMD_RET_BALL_STATU)
+        this.node.destroy();
     }
 }

@@ -1,7 +1,7 @@
 const { ccclass } =cc._decorator;
 
 @ccclass('utils')
-export class utils  { 
+export class utils extends cc.Component { 
     
     public static loadPrefab(prefabUrl, successCallback: any, failCallback?: any) {
         let prefab = cc.loader.getRes(prefabUrl, cc.Prefab)
@@ -39,6 +39,7 @@ export class utils  {
         }
     }
 
+    
     public static findNodeByName(root, name) {
         if (root) {
             let widget = root.getChildByName(name);
@@ -57,4 +58,35 @@ export class utils  {
         }
         return null
     }
+
+    //按钮点击缩放，btn为触摸的node，icon为缩放效果node
+    public static btnEffect1(btn:cc.Node, icon? :any, scaleX? :number, scaleY? :number) {
+        if (!icon) {
+            icon = btn
+        }
+
+        let preScaleX = btn.scaleX
+        let preScaleY = btn.scaleY
+
+        if (scaleX) {
+            preScaleX = scaleX;
+        }
+
+        if (scaleY) {
+            preScaleY = scaleY;
+        }
+
+        btn.on(cc.Node.EventType.TOUCH_START, function(e){
+            icon.runAction(cc.scaleTo(0.1, preScaleX*1.1, preScaleY*1.1))
+        }.bind(btn), btn)
+
+        btn.on(cc.Node.EventType.TOUCH_END, function(e){
+            icon.runAction(cc.scaleTo(0.2, preScaleX, preScaleY))
+        }.bind(btn), btn)
+
+        btn.on(cc.Node.EventType.TOUCH_CANCEL, function(e){
+            icon.runAction(cc.scaleTo(0.2, preScaleX, preScaleY))
+        }.bind(btn), btn)
+    }
+
 }
