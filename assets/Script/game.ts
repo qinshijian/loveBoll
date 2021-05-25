@@ -1,3 +1,5 @@
+import { EventIDS } from "./event/EvenID";
+import EventDispath from "./event/Event";
 import uiManger from "./uiManger";
 
 const { ccclass, property } = cc._decorator;
@@ -25,6 +27,7 @@ export default class game extends cc.Component {
     bluePos = cc.v2(0, 0);    //蓝色小球初始位置
     pinkPos = cc.v2(0, 0);    //粉色小球初始位置
     radius = 100;             //绳子的长度
+    depth = 1;                //力度
     dir = cc.v2(0, 0);        //蓝色小球拖动的方向
     timeInterval = 0;        //轨迹生成间隔
     list = [];               //轨迹数组
@@ -36,7 +39,15 @@ export default class game extends cc.Component {
         this.blueBall.enabledContactListener = true;
         this.pinkBall.enabledContactListener = true;
         this.bluePos = this.blueBall.node.getPosition();
+        this.blueBall.node.zIndex = cc.macro.MAX_ZINDEX;
         this.initTouchEvent();
+        this.loadPoint();
+        //添加障碍物
+        this.addAbstacle(0);
+        this.onBind();
+    }
+
+    loadPoint(){
         this.enemyPool = new cc.NodePool();
         //预加载
         let initCount = 10;
@@ -44,9 +55,30 @@ export default class game extends cc.Component {
             let enemy = cc.instantiate(this.pointPrefab); // 创建节点
             this.enemyPool.put(enemy); // 通过 put 接口放入对象池
         }
+    }
+    onBind(){
+        EventDispath.getInstance().addEventListener(EventIDS.CMD_RET_BALL_STATU, this.retBallStasu, this)
+    }
 
-        //添加障碍物
-        this.addAbstacle(0);
+    removeListener(){
+        EventDispath.getInstance().removeEventListeners(this);
+    }
+
+    retBallStasu(){
+        for (let i = this.node.children.length -1 ; i>= 0;i--) {
+            let element = this.node.children[i];
+            if(element.name == "enemy"){
+                element.removeFromParent();
+            }
+        }
+        this.blueBall.node.setPosition(this.bluePos);
+        this.moveFlag = false;
+        this.index = 0;
+        this.blueBall.linearVelocity = cc.v2(0,0);
+        this.blueBall.gravityScale = 0;
+        this.clearPool();
+        cc.director.getPhysicsManager().enabled = true;
+        this.loadPoint();
     }
 
     //添加障碍物
@@ -84,6 +116,16 @@ export default class game extends cc.Component {
             pos.x = pos.x * this.radius / s
             pos.y = pos.y * this.radius / s
             s = this.radius;
+            this.depth = 5;
+        }
+        if(s > 80 && s < this.radius){
+            this.depth = 4
+        }else if(s > 60 && s <= 80){
+            this.depth = 3
+        }else if(s > 40 && s <= 60){
+            this.depth = 2.5
+        }else if(s > 20 && s <= 40){
+            this.depth = 2
         }
         this.blueBall.node.setPosition(this.bluePos.add(pos));
 
@@ -104,8 +146,8 @@ export default class game extends cc.Component {
         //设置初始位置
         this.line.setContentSize(8,1);
         //设置速度
-        this.blueBall.linearVelocity = cc.v2(-500*this.dir.x,-500*this.dir.y);
-        this.blueBall.gravityScale = 0.3
+        this.blueBall.linearVelocity = cc.v2(-110*this.depth*this.dir.x,-110*this.depth*this.dir.y);
+        this.blueBall.gravityScale = 1
         this.moveFlag = true;
     }
 
@@ -136,6 +178,7 @@ export default class game extends cc.Component {
             enemy = cc.instantiate(this.pointPrefab);
         }
         enemy.parent = this.node;
+        enemy.name = "enemy";
         enemy.active = false;
         this.list.push(enemy);
         if(call){call();}
@@ -144,7 +187,7 @@ export default class game extends cc.Component {
     update (dt) {
         if(this.moveFlag){
             this.timeInterval += dt;
-            if(this.timeInterval >= 0.1){
+            if(this.timeInterval >= 0.06){
                 this.timeInterval = 0;
                 this.index++;
                 if(this.index > 100){

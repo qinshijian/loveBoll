@@ -1,3 +1,5 @@
+import { EventIDS } from "./event/EvenID";
+import EventDispath from "./event/Event";
 
 const {ccclass, property} = cc._decorator;
 
@@ -23,11 +25,11 @@ export default class result extends cc.Component {
 
     onAgain(){
         this.node.removeFromParent();
-        cc.director.getPhysicsManager().enabled = true;
+        EventDispath.getInstance().send(EventIDS.CMD_RET_BALL_STATU)
     }
 
     onNext(){
         this.node.removeFromParent();
-        cc.director.getPhysicsManager().enabled = true;
+        EventDispath.getInstance().send(EventIDS.CMD_RET_BALL_STATU)
     }
 }
