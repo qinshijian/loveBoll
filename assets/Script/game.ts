@@ -17,6 +17,9 @@ export default class game extends cc.Component {
     pointPrefab = null;
 
     @property(cc.Node)
+    pointTemp = null;
+
+    @property(cc.Node)
     line = null;
 
     enemyPool:any;  //轨迹点对象池
@@ -72,6 +75,7 @@ export default class game extends cc.Component {
             }
         }
         this.blueBall.node.setPosition(this.bluePos);
+        this.pointTemp.active = true;
         this.moveFlag = false;
         this.index = 0;
         this.blueBall.linearVelocity = cc.v2(0,0);
@@ -134,7 +138,7 @@ export default class game extends cc.Component {
         this.dir.y = pos.y / s //cos = 领边/斜边
         //radiansToDegrees弧度转角度。atan2返回从 x 轴到点 (x,y) 之间的角度 Math.atan2(y,x)，结果为弧度
         this.line.rotation = -90-cc.misc.radiansToDegrees(Math.atan2(this.dir.y,this.dir.x));
-        this.line.setContentSize(8,s);
+        this.line.setContentSize(3,s);
     }
 
     touchEndEvent(event) {
@@ -144,11 +148,12 @@ export default class game extends cc.Component {
             return
         }
         //设置初始位置
-        this.line.setContentSize(8,1);
+        this.line.setContentSize(3,0);
         //设置速度
         this.blueBall.linearVelocity = cc.v2(-110*this.depth*this.dir.x,-110*this.depth*this.dir.y);
         this.blueBall.gravityScale = 1
         this.moveFlag = true;
+        this.pointTemp.active = false;
     }
 
     touchCancleEvent() {

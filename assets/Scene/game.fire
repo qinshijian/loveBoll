@@ -207,7 +207,7 @@
       "array": [
         0,
         0,
-        364.5966949932487,
+        369.7849647239487,
         0,
         0,
         0,
@@ -1132,14 +1132,14 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 10,
+      "g": 31,
+      "b": 42,
       "a": 255
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 8,
+      "width": 3,
       "height": 1
     },
     "_anchorPoint": {
@@ -1210,7 +1210,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Sprite(Splash)",
+    "_name": "point1",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -1226,9 +1226,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 199,
+      "r": 255,
       "g": 255,
-      "b": 0,
+      "b": 255,
       "a": 255
     },
     "_contentSize": {
@@ -1286,7 +1286,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "a23235d1-15db-4b95-8439-a2e005bfff91"
+      "__uuid__": "62ab9821-acda-4189-a467-1ecc1d30c01c"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -2987,6 +2987,9 @@
     },
     "pointPrefab": {
       "__uuid__": "d4eda2dc-de7b-40f7-bcf7-e2fe26caaa9d"
+    },
+    "pointTemp": {
+      "__id__": 30
     },
     "line": {
       "__id__": 28
