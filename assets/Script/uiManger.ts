@@ -9,6 +9,17 @@ export default class uiManger {
 
     }
 
+    //签到
+    signLayer(basenode: any) {
+        let prefabUrl = "prefab/signLayer"
+        utils.loadPrefab(prefabUrl, function (prefab: any) {
+            if (utils.findNodeByName(basenode, "signLayer")) { return }
+            let node = cc.instantiate(prefab)
+            node.setPosition(cc.winSize.width/2, cc.winSize.height/2)
+            basenode.addChild(node, 200)
+        }.bind(this))
+    }
+
     //结算
     resultLayer(basenode: any, data: any) {
         let prefabUrl = "prefab/result"

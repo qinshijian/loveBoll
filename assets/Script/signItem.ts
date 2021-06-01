@@ -1,5 +1,3 @@
-import { EventIDS } from "./event/EvenID";
-import EventDispath from "./event/Event";
 import { utils } from "./utils";
 
 const {ccclass, property} = cc._decorator;
@@ -7,30 +5,25 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class signItem extends cc.Component {
 
-    @property(cc.Label)
-    count: cc.Label = null;
+    @property(cc.Sprite)
+    bg: cc.Sprite = null;
 
     @property(cc.Sprite)
     day: cc.Sprite = null;
 
-    @property(cc.Sprite)
-    bg: cc.Sprite = null;
+    @property(cc.Label)
+    count: cc.Label = null;
 
     @property(cc.Node)
-    select: cc.Node = null;
+    selectNode: cc.Node = null;
 
-    isReward:boolean = false;
+    @property(cc.Node)
+    lyout: cc.Node = null;
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-         //投食
-         this.node.on(cc.Node.EventType.TOUCH_END, () => {
-            if(!this.isReward){
-                console.log("点击");
-            }
-        }, this)
-        utils.btnEffect1(this.node)
+        console.log("show result");
     }
 
     start () {
@@ -38,25 +31,23 @@ export default class signItem extends cc.Component {
     }
 
     setData(data){
-        if(!data){
-            return;
+        // if(!data){
+        //     return
+        // }
+
+        console.log(data);
+
+        let url = "sign/login_"+(data+1);
+        utils.loadSpriteFrame(url,function(res){
+            this.day.spriteFrame = res;
+        }.bind(this));
+
+        if(data == 6){
+            utils.loadSpriteFrame("sign/loginBg_2",function(res){
+                this.bg.spriteFrame = res;
+            }.bind(this));
+
+            this.lyout.setPosition(289,0);
         }
-        this.count.string = data.count;
-
-        let url = "sign/login_" + data.day;
-        this.updatePicSprite(this.day,url)
-
-        
-    }
-
-    onSign(){
-        this.node.destroy();
-    }
-
-    
-    updatePicSprite(iconImg, url) {
-        utils.loadSpriteFrame(url, function (spriteFrame) {
-            iconImg.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-        }.bind(this))
     }
 }
