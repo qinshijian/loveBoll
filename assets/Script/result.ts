@@ -7,7 +7,16 @@ const {ccclass, property} = cc._decorator;
 export default class result extends cc.Component {
 
     @property(cc.Label)
-    tips: cc.Label = null;
+    changeNum: cc.Label = null;
+
+    @property(cc.Sprite)
+    result: cc.Sprite = null;
+
+    @property(cc.Label)
+    count: cc.Label = null;
+
+    @property(cc.Sprite)
+    nextOrStart: cc.Sprite = null;
 
     // LIFE-CYCLE CALLBACKS:
 
@@ -20,7 +29,7 @@ export default class result extends cc.Component {
     }
 
     setData(data){
-        this.tips.string = data;
+        // this.tips.string = data;
     }
 
     onAgain(){
