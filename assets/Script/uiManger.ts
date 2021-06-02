@@ -9,6 +9,13 @@ export default class uiManger {
 
     }
 
+    getStorgeInfo(key){
+       return cc.sys.localStorage.getItem(key)
+    }
+
+    setStorgeInfo(key,value){
+        cc.sys.localStorage.setItem(key,value)
+    }
     //签到
     signLayer(basenode: any) {
         let prefabUrl = "prefab/signLayer"
@@ -17,6 +24,18 @@ export default class uiManger {
             let node = cc.instantiate(prefab)
             node.setPosition(cc.winSize.width/2, cc.winSize.height/2)
             basenode.addChild(node, 200)
+        }.bind(this))
+    }
+
+    //开始游戏界面
+    startLayer(basenode: any,callback?:any) {
+        let prefabUrl = "prefab/start"
+        utils.loadPrefab(prefabUrl, function (prefab: any) {
+            if (utils.findNodeByName(basenode, "start")) { return }
+            let node = cc.instantiate(prefab)
+            node.getComponent("startLayer").setData(callback);
+            node.setPosition(cc.winSize.width/2, cc.winSize.height/2)
+            cc.director.getScene().addChild(node, 200)
         }.bind(this))
     }
 

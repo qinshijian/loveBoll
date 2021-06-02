@@ -38,6 +38,7 @@ export default class game extends cc.Component {
 
     moveFlag:boolean = false;
     onLoad() {
+        this.onloadStart();
         cc.director.getPhysicsManager().enabled = true;
         this.blueBall.enabledContactListener = true;
         this.pinkBall.enabledContactListener = true;
@@ -210,5 +211,11 @@ export default class game extends cc.Component {
                 }.bind(this)); 
             }
         }
+    }
+
+    onloadStart(){
+        uiManger.getInstance().startLayer(this.node,function(){
+            console.log("1111111");
+        }.bind(this));
     }
 }
