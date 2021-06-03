@@ -38,6 +38,7 @@ export default class game extends cc.Component {
 
     moveFlag:boolean = false;
     onLoad() {
+        // this.onloading();
         this.onloadStart();
         cc.director.getPhysicsManager().enabled = true;
         this.blueBall.enabledContactListener = true;
@@ -215,7 +216,19 @@ export default class game extends cc.Component {
 
     onloadStart(){
         uiManger.getInstance().startLayer(this.node,function(){
-            console.log("1111111");
+            this.checkGuide();
         }.bind(this));
+    }
+
+    checkGuide(){
+        let a = uiManger.getInstance().getStorgeInfo("loveball_guide");
+        if(!a){
+            uiManger.getInstance().setStorgeInfo("loveball_guide", 1);
+            uiManger.getInstance().guideLayer();
+        }
+    }
+
+    onloading(){
+        uiManger.getInstance().loadingLayer();
     }
 }

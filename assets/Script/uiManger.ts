@@ -39,6 +39,28 @@ export default class uiManger {
         }.bind(this))
     }
 
+      //引导界面
+      guideLayer() {
+        let prefabUrl = "prefab/guideLayer"
+        utils.loadPrefab(prefabUrl, function (prefab: any) {
+            if (utils.findNodeByName(cc.director.getScene(), "guideLayer")) { return }
+            let node = cc.instantiate(prefab)
+            node.setPosition(cc.winSize.width/2, cc.winSize.height/2)
+            cc.director.getScene().addChild(node, 200)
+        }.bind(this))
+    }
+
+     //loading界面
+     loadingLayer() {
+        let prefabUrl = "prefab/loading"
+        utils.loadPrefab(prefabUrl, function (prefab: any) {
+            if (utils.findNodeByName(cc.director.getScene(), "loading")) { return }
+            let node = cc.instantiate(prefab)
+            node.setPosition(cc.winSize.width/2, cc.winSize.height/2)
+            cc.director.getScene().addChild(node, 300)
+        }.bind(this))
+    }
+
     //结算
     resultLayer(basenode: any, data: any) {
         let prefabUrl = "prefab/result"
