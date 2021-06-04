@@ -23,7 +23,6 @@ export default class signItem extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        console.log("show result");
     }
 
     start () {
@@ -31,12 +30,9 @@ export default class signItem extends cc.Component {
     }
 
     setData(data){
-        // if(!data){
-        //     return
-        // }
-
-        console.log(data);
-
+        if(!data){
+            return
+        }
         let url = "sign/login_"+(data+1);
         utils.loadSpriteFrame(url,function(res){
             this.day.spriteFrame = res;
@@ -49,5 +45,9 @@ export default class signItem extends cc.Component {
 
             this.lyout.setPosition(289,0);
         }
+    }
+
+    setSelect(){
+        this.selectNode.active = true;
     }
 }

@@ -1,6 +1,7 @@
 import { EventIDS } from "./event/EvenID";
 import EventDispath from "./event/Event";
 import uiManger from "./uiManger";
+import { utils } from "./utils";
 
 const { ccclass, property } = cc._decorator;
 
@@ -21,6 +22,10 @@ export default class game extends cc.Component {
 
     @property(cc.Node)
     line = null;
+
+    @property(cc.Node)
+    skinBtn = null;
+    
 
     enemyPool:any;  //轨迹点对象池
     moveInterval = 2; //start点和end相对位置
@@ -52,6 +57,18 @@ export default class game extends cc.Component {
         this.onBind();
     }
 
+     //检测显示第几天
+     checkDay(){
+        //检测今天是否已经签到过 如果签到过，就不弹签到框，如果没有，则弹签到框
+        let a = uiManger.getInstance().getStorgeInfo("loveBall_isSign");
+        if(a && a == utils.getCurtDate()){
+            //今天已经签到过
+        }else{
+            //今天没有签到 弹出签到框
+            uiManger.getInstance().signLayer();
+        }
+    }
+
     loadPoint(){
         this.enemyPool = new cc.NodePool();
         //预加载
@@ -62,6 +79,11 @@ export default class game extends cc.Component {
         }
     }
     onBind(){
+        this.skinBtn.on(cc.Node.EventType.TOUCH_END, () => {
+            this.onClear()
+        }, this)
+        utils.btnEffect1(this.skinBtn);
+
         EventDispath.getInstance().addEventListener(EventIDS.CMD_RET_BALL_STATU, this.retBallStasu, this)
     }
 
@@ -216,7 +238,8 @@ export default class game extends cc.Component {
 
     onloadStart(){
         uiManger.getInstance().startLayer(this.node,function(){
-            this.checkGuide();
+            //this.checkGuide();
+            this.checkDay();
         }.bind(this));
     }
 
@@ -230,5 +253,9 @@ export default class game extends cc.Component {
 
     onloading(){
         uiManger.getInstance().loadingLayer();
+    }
+
+    onClear(){
+        cc.sys.localStorage.clear()
     }
 }

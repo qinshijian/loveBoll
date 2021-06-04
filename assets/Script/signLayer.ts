@@ -1,3 +1,4 @@
+import uiManger from "./uiManger";
 import { utils } from "./utils";
 
 
@@ -22,26 +23,42 @@ export default class signLayer extends cc.Component {
     reward: cc.Node = null;
     // LIFE-CYCLE CALLBACKS:
 
+    groupArr = [];//将node添加到数组里
+
     cardSize = cc.size(178, 183);
     spaceX = 20;
     spaceY = 26;
 
 
     onLoad () {
-        this.createSignList();
+        this.createSignList(function(){
+            let a = uiManger.getInstance().getStorgeInfo("loveBall_day");
+            if(a){
+                for (let i = 0; i < Number(a); i++) {
+                    var element = this.groupArr[i];
+                    if(element){
+                        element.getComponent("signItem").setSelect();
+                    }
+                }
+            }
+        }.bind(this));
 
         this.close.on(cc.Node.EventType.TOUCH_END,  () => {
             this.onClose()
         }, this)
         utils.btnEffect1(this.close);
+
+        this.reward.on(cc.Node.EventType.TOUCH_END, () => {
+            this.onReward()
+        }, this)
+        utils.btnEffect1(this.reward);
     }
 
     start () {
 
     }
 
-     createSignList() {
-     // let allcount = this.infoData.length;
+     createSignList(callback:any) {
         let allcount = 7;
         if(!allcount || allcount == null || allcount == 0){
             return
@@ -55,6 +72,13 @@ export default class signLayer extends cc.Component {
                 this.scrollView.content.addChild(card)
                 let pos = this.getCardPos(i)
                 card.setPosition(pos.x, pos.y);
+                this.groupArr.push(card);
+                if(this.groupArr.length == 7){
+                    if(callback){
+                        callback();
+                    }
+                    return
+                }
             }
         }
     }
@@ -79,10 +103,18 @@ export default class signLayer extends cc.Component {
     }
 
     onReward(){
-
-    }
-
-    onSelect(){
-        
+        //保存到本地，更新天数
+        let a = uiManger.getInstance().getStorgeInfo("loveBall_day");
+        if(a){
+            if(Number(a) == 6){
+                uiManger.getInstance().setStorgeInfo("loveBall_day",0);
+            }else{
+                uiManger.getInstance().setStorgeInfo("loveBall_day",Number(a)+1);
+            }
+        }else{
+            uiManger.getInstance().setStorgeInfo("loveBall_day",1);
+        }
+        uiManger.getInstance().setStorgeInfo("loveBall_isSign",utils.getCurtDate());
+        this.onClose();
     }
 }

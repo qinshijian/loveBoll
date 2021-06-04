@@ -26,8 +26,13 @@ export default class loading extends cc.Component {
         if(this.isloading){
             return;
         }
-        // this.curPro += dt;
 
-        // this.par.fillRange = this.curPro / 100
+        this.curPro += ((100/2)*dt)
+        if (this.curPro >= 99) {
+            this.curPro = 99
+            this.isloading = true;
+        }
+
+        this.par.fillRange = this.curPro / 100
     }
 }

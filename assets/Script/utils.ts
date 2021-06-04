@@ -89,4 +89,16 @@ export class utils extends cc.Component {
         }.bind(btn), btn)
     }
 
+
+    public static getCurtDate(){
+        var date = new Date();
+        var Y = date.getFullYear()+"";
+        var M = this.add0(date.getMonth()+1);
+        var D = this.add0(date.getDate());
+        return Y+M+D;
+    }
+
+    static add0(m: number) {
+        return m < 10 ? '0' + m : m;
+    }
 }
