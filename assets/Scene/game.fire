@@ -207,7 +207,7 @@
       "array": [
         0,
         0,
-        564.648563267454,
+        562.9165124598851,
         0,
         0,
         0,
@@ -1305,7 +1305,7 @@
   {
     "__type__": "cc.Node",
     "_name": "bule",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 2
     },
@@ -1872,7 +1872,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 36,
+      "width": 19,
       "height": 40
     },
     "_anchorPoint": {
@@ -1923,8 +1923,8 @@
       }
     ],
     "_useOriginalSize": false,
-    "_string": "25",
-    "_N$string": "25",
+    "_string": "0",
+    "_N$string": "0",
     "_fontSize": 32,
     "_lineHeight": 40,
     "_enableWrapText": true,
@@ -2096,7 +2096,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 120,
+      "width": 111.43,
       "height": 40
     },
     "_anchorPoint": {
@@ -2147,8 +2147,8 @@
       }
     ],
     "_useOriginalSize": false,
-    "_string": "第6关",
-    "_N$string": "第6关",
+    "_string": "第1关",
+    "_N$string": "第1关",
     "_fontSize": 40,
     "_lineHeight": 40,
     "_enableWrapText": true,
@@ -2192,7 +2192,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 150,
+      "width": 157,
       "height": 40
     },
     "_anchorPoint": {
@@ -2243,8 +2243,8 @@
       }
     ],
     "_useOriginalSize": false,
-    "_string": "挑战次数：1",
-    "_N$string": "挑战次数：1",
+    "_string": "挑战次数：0",
+    "_N$string": "挑战次数：0",
     "_fontSize": 28,
     "_lineHeight": 40,
     "_enableWrapText": true,
@@ -2996,6 +2996,15 @@
     },
     "skinBtn": {
       "__id__": 60
+    },
+    "money": {
+      "__id__": 46
+    },
+    "challengeNum": {
+      "__id__": 53
+    },
+    "level": {
+      "__id__": 51
     },
     "_id": "93tI/5vTxPh5xaXYmft2MC"
   }

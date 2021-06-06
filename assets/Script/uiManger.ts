@@ -27,6 +27,17 @@ export default class uiManger {
         }.bind(this))
     }
 
+    //皮肤
+    skinLayer() {
+        let prefabUrl = "prefab/skinLayer"
+        utils.loadPrefab(prefabUrl, function (prefab: any) {
+            if (utils.findNodeByName(cc.director.getScene(), "skinLayer")) { return }
+            let node = cc.instantiate(prefab)
+            node.setPosition(cc.winSize.width/2, cc.winSize.height/2)
+            cc.director.getScene().addChild(node, 200)
+        }.bind(this))
+    }
+
     //开始游戏界面
     startLayer(basenode: any,callback?:any) {
         let prefabUrl = "prefab/start"

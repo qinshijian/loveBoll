@@ -25,7 +25,16 @@ export default class game extends cc.Component {
 
     @property(cc.Node)
     skinBtn = null;
-    
+
+    //数据
+    @property(cc.Label)
+    money = null; //金币
+
+    @property(cc.Label)
+    challengeNum = null; //挑战次数
+
+    @property(cc.Label)
+    level = null; //当前关卡
 
     enemyPool:any;  //轨迹点对象池
     moveInterval = 2; //start点和end相对位置
@@ -55,6 +64,32 @@ export default class game extends cc.Component {
         //添加障碍物
         this.addAbstacle(0);
         this.onBind();
+        this.initData();
+    }
+
+    //读取本地缓存数据
+    initData(){
+        let data = uiManger.getInstance();
+        let cacheMoney = data.getStorgeInfo("loveBall_money")
+        if(cacheMoney && cacheMoney > 0){
+            this.money.string = cacheMoney;
+        }else{
+            data.setStorgeInfo("loveBall_money",0)
+        }
+
+        let cacheLevel = data.getStorgeInfo("loveBall_level")
+        if(cacheLevel && cacheLevel > 0){
+            this.level.string = "第" + cacheLevel + "关";
+        }else{
+            data.setStorgeInfo("loveBall_level",1)
+        }
+
+        let cacheChallenge = data.getStorgeInfo("loveBall_challenge")
+        if(cacheChallenge && cacheChallenge > 0){
+            this.challengeNum.string = "挑战次数：" + cacheChallenge;
+        }else{
+            data.setStorgeInfo("loveBall_challenge",0)
+        }
     }
 
      //检测显示第几天
@@ -80,7 +115,8 @@ export default class game extends cc.Component {
     }
     onBind(){
         this.skinBtn.on(cc.Node.EventType.TOUCH_END, () => {
-            this.onClear()
+            // this.onClear()
+            this.onSkin();
         }, this)
         utils.btnEffect1(this.skinBtn);
 
@@ -258,4 +294,9 @@ export default class game extends cc.Component {
     onClear(){
         cc.sys.localStorage.clear()
     }
+
+    onSkin(){
+        uiManger.getInstance().skinLayer();
+    }
+
 }
