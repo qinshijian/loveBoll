@@ -31,6 +31,7 @@ export default class loading extends cc.Component {
         if (this.curPro >= 99) {
             this.curPro = 99
             this.isloading = true;
+            this.node.destroy();
         }
 
         this.par.fillRange = this.curPro / 100

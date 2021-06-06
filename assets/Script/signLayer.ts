@@ -2,7 +2,7 @@ import uiManger from "./uiManger";
 import { utils } from "./utils";
 
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class signLayer extends cc.Component {
@@ -19,6 +19,9 @@ export default class signLayer extends cc.Component {
     @property(cc.Node)
     selectStau: cc.Node = null;
 
+    @property(cc.Sprite)
+    selectIcon: cc.Sprite = null;
+    
     @property(cc.Node)
     reward: cc.Node = null;
     // LIFE-CYCLE CALLBACKS:
@@ -28,22 +31,23 @@ export default class signLayer extends cc.Component {
     cardSize = cc.size(178, 183);
     spaceX = 20;
     spaceY = 26;
+    select: boolean = false;
 
 
-    onLoad () {
-        this.createSignList(function(){
+    onLoad() {
+        this.createSignList(function () {
             let a = uiManger.getInstance().getStorgeInfo("loveBall_day");
-            if(a){
+            if (a) {
                 for (let i = 0; i < Number(a); i++) {
                     var element = this.groupArr[i];
-                    if(element){
+                    if (element) {
                         element.getComponent("signItem").setSelect();
                     }
                 }
             }
         }.bind(this));
 
-        this.close.on(cc.Node.EventType.TOUCH_END,  () => {
+        this.close.on(cc.Node.EventType.TOUCH_END, () => {
             this.onClose()
         }, this)
         utils.btnEffect1(this.close);
@@ -52,15 +56,20 @@ export default class signLayer extends cc.Component {
             this.onReward()
         }, this)
         utils.btnEffect1(this.reward);
+
+        this.selectStau.on(cc.Node.EventType.TOUCH_END, () => {
+            this.onChangeIcon()
+        }, this)
+        utils.btnEffect1(this.selectStau);
     }
 
-    start () {
+    start() {
 
     }
 
-     createSignList(callback:any) {
+    createSignList(callback: any) {
         let allcount = 7;
-        if(!allcount || allcount == null || allcount == 0){
+        if (!allcount || allcount == null || allcount == 0) {
             return
         }
 
@@ -73,8 +82,8 @@ export default class signLayer extends cc.Component {
                 let pos = this.getCardPos(i)
                 card.setPosition(pos.x, pos.y);
                 this.groupArr.push(card);
-                if(this.groupArr.length == 7){
-                    if(callback){
+                if (this.groupArr.length == 7) {
+                    if (callback) {
                         callback();
                     }
                     return
@@ -91,30 +100,52 @@ export default class signLayer extends cc.Component {
     }
 
     getCardPos(count: number) {
-        let firstPos = cc.v2(-(this.cardSize.width  + this.spaceX + 90), -this.cardSize.height / 2)
+        let firstPos = cc.v2(-(this.cardSize.width + this.spaceX + 90), -this.cardSize.height / 2)
         let row1 = Math.floor(count / 3)
         let col = count % 3
 
         return cc.v2(firstPos.x + col * (this.cardSize.width + this.spaceX), firstPos.y - row1 * (this.cardSize.height + this.spaceY));
     }
 
-    onClose(){
+    onClose() {
         this.node.destroy();
     }
 
-    onReward(){
+    onReward() {
+        let money = uiManger.getInstance().getStorgeInfo("loveBall_money");
+        let count = 20;
+        if (this.select) {
+            count = count * 2;
+        }
+        uiManger.getInstance().setStorgeInfo("loveBall_money", count + money);
+
         //保存到本地，更新天数
         let a = uiManger.getInstance().getStorgeInfo("loveBall_day");
-        if(a){
-            if(Number(a) == 6){
-                uiManger.getInstance().setStorgeInfo("loveBall_day",0);
-            }else{
-                uiManger.getInstance().setStorgeInfo("loveBall_day",Number(a)+1);
+        if (a) {
+            if (Number(a) == 6) {
+                uiManger.getInstance().setStorgeInfo("loveBall_day", 0);
+            } else {
+                uiManger.getInstance().setStorgeInfo("loveBall_day", Number(a) + 1);
             }
-        }else{
-            uiManger.getInstance().setStorgeInfo("loveBall_day",1);
+        } else {
+            uiManger.getInstance().setStorgeInfo("loveBall_day", 1);
         }
-        uiManger.getInstance().setStorgeInfo("loveBall_isSign",utils.getCurtDate());
+        uiManger.getInstance().setStorgeInfo("loveBall_isSign", utils.getCurtDate());
         this.onClose();
+    }
+
+    //是否双倍观看
+    onChangeIcon(){
+        let url = "sign/select_0";
+        if(this.select){
+            this.select = false;
+            url = "sign/select_0";
+        }else{
+            this.select = true;
+            url = "sign/select_1";
+        }
+        utils.loadSpriteFrame(url,function(res){
+            this.selectIcon.spriteFrame = res;
+        }.bind(this));
     }
 }

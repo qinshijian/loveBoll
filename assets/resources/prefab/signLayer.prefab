@@ -1300,6 +1300,7 @@
     "selectStau": {
       "__id__": 25
     },
+    "selectIcon": null,
     "reward": {
       "__id__": 21
     },

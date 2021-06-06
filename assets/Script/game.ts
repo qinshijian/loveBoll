@@ -52,7 +52,7 @@ export default class game extends cc.Component {
 
     moveFlag:boolean = false;
     onLoad() {
-        // this.onloading();
+        this.onloading();
         this.onloadStart();
         cc.director.getPhysicsManager().enabled = true;
         this.blueBall.enabledContactListener = true;
