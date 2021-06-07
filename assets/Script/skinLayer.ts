@@ -91,7 +91,7 @@ export default class skinLayer extends cc.Component {
     }
 
     createBoyList(){
-        let allcount = 7;
+        let allcount = 9;
         this.scrollView1.content.setContentSize(620, this.getAllHeight(allcount))
         if (this.growthBoy.length > 0) {
             return
@@ -101,7 +101,7 @@ export default class skinLayer extends cc.Component {
             for (let i = 0; i < allcount; i++) {
                 let card = cc.instantiate(this.item)
                 if (card) {
-                    // card.getComponent("shopItem").setData(this.growthShopData[i])
+                    card.getComponent("skinItem").setData(i,1)
                     this.scrollView1.content.addChild(card);
                     let pos = this.getCardPos(i)
                     card.setPosition(pos.x, pos.y)
@@ -112,7 +112,7 @@ export default class skinLayer extends cc.Component {
     }
 
     createGirlList(){
-        let allcount = 8;
+        let allcount = 9;
         this.scrollView2.content.setContentSize(620, this.getAllHeight(allcount))
         if (this.growthGirl.length > 0) {
             return
@@ -122,7 +122,7 @@ export default class skinLayer extends cc.Component {
             for (let i = 0; i < allcount; i++) {
                 let card = cc.instantiate(this.item)
                 if (card) {
-                    // card.getComponent("shopItem").setData(this.growthShopData[i])
+                    card.getComponent("skinItem").setData(i,2,true)
                     this.scrollView2.content.addChild(card);
                     let pos = this.getCardPos(i)
                     card.setPosition(pos.x, pos.y)
