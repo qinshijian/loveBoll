@@ -62,7 +62,7 @@ export default class game extends cc.Component {
         this.initTouchEvent();
         this.loadPoint();
         //添加障碍物
-        this.addAbstacle(0);
+        this.addAbstacle(2);
         this.onBind();
         this.initData();
     }

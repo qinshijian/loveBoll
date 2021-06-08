@@ -61,7 +61,6 @@ export default class skinItem extends cc.Component {
                 this.eye.getComponent(cc.Sprite).spriteFrame = res;
             }.bind(this));
         }
-        
     }
 
     setSelect(){
