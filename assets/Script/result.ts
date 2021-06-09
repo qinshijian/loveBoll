@@ -15,8 +15,14 @@ export default class result extends cc.Component {
     @property(cc.Label)
     count: cc.Label = null;
 
-    @property(cc.Sprite)
-    nextOrStart: cc.Sprite = null;
+    @property(cc.Node)
+    next: cc.Node = null;
+
+    @property(cc.Node)
+    restart: cc.Node = null;
+
+    @property(cc.Node)
+    jump: cc.Node = null;
 
     // LIFE-CYCLE CALLBACKS:
 
